@@ -195,7 +195,8 @@ while True:
     if repeat not in yes_or_no:
         continue
     if repeat == "yes":
-        generate_password()
+        for i in range(int(input("How many passwords do you want to generate? "))):
+            generate_password()
         continue
     if repeat == "no":
         break
