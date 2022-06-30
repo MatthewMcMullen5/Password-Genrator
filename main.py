@@ -6,14 +6,6 @@ class bcolors:
     RESET = '\033[0m'
 
 
-def _input(message, input_type=str):
-    while True:
-        try:
-            return input_type(input(message))
-        except:
-            pass
-
-
 class Guide():
     def display(self):
         print(bcolors.true +
@@ -26,6 +18,14 @@ class Guide():
               f"Similar:{r1.has_similar}, "
               f"Ambiguous:{r1.has_ambiguous}.",
               "\n" + bcolors.RESET)
+
+
+def _input(message, input_type=str):
+    while True:
+        try:
+            return input_type(input(message))
+        except:
+            pass
 
 
 r1 = Guide()
@@ -101,6 +101,7 @@ def initiate():
                     reset()
             if answer == "q":
                 reset()
+                break
             if answer not in yes_or_no:
                 continue
 
@@ -156,11 +157,12 @@ def generate_password():
 while True:
     generate_password()
     repeat = input("Would you like to generate another with these same parameters? ").lower()
+
     if repeat not in yes_or_no:
         continue
 
     if repeat == "yes":
-        for i in range(int(input("How many passwords do you want to generate? "))):
+        for i in range(int(_input("How many passwords do you want to generate? ", int))):
             generate_password()
         continue
 
