@@ -6,17 +6,26 @@ class bcolors:
     RESET = '\033[0m'
 
 
-class Guide():
+class Guide:
+    def __init__(self, characters, has_symbols, has_numbers, has_lower, has_upper, has_similar, has_ambiguous):
+        self.characters = characters
+        self.has_symbols = has_symbols
+        self.has_numbers = has_numbers
+        self.has_lower = has_lower
+        self.has_upper = has_upper
+        self.has_similar = has_similar
+        self.has_ambiguous = has_ambiguous
+
     def display(self):
         print(bcolors.true +
               "\n",
-              f"Characters:{r1.characters}, "
-              f"Symbols:{r1.has_symbols}, "
-              f"Numbers:{r1.has_numbers}, "
-              f"Lower:{r1.has_lower}, "
-              f"Upper:{r1.has_upper}, "
-              f"Similar:{r1.has_similar}, "
-              f"Ambiguous:{r1.has_ambiguous}.",
+              f"Characters:{self.characters}, "
+              f"Symbols:{self.has_symbols}, "
+              f"Numbers:{self.has_numbers}, "
+              f"Lower:{self.has_lower}, "
+              f"Upper:{self.has_upper}, "
+              f"Similar:{self.has_similar}, "
+              f"Ambiguous:{self.has_ambiguous}.",
               "\n" + bcolors.RESET)
 
 
@@ -28,15 +37,16 @@ def _input(message, input_type=str):
             pass
 
 
-r1 = Guide()
+r1 = Guide(characters=0, has_lower=False, has_upper=False, has_numbers=False,
+           has_symbols=False, has_ambiguous=False, has_similar=False)
 yes_or_no = ["yes", "no"]
 
 
 def reset():
-    r = input("Do you want to start over? Yes/No ").lower()
-    if r == "yes":
+    response = input("Do you want to start over? Yes/No ").lower()
+    if response == "yes":
         initiate()
-    if r == "no":
+    if response == "no":
         quit()
 
 
@@ -141,7 +151,7 @@ if r1.has_lower:
     password_key += password_lower
 if r1.has_upper:
     password_key += password_upper
-if r1.has_similar is False:
+if not r1.has_similar:
     password_key.append(r1.has_similar)
 if r1.has_ambiguous:
     password_key += password_ambiguous
@@ -149,8 +159,8 @@ if r1.has_ambiguous:
 
 def generate_password():
     password = ""
-    for x in range(0, r1.characters):
-        password += random.choice(password_key)
+    for x in range(0, int(r1.characters)):
+        password += str(random.choice(password_key))
     print(password)
 
 
